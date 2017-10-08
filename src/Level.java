@@ -15,14 +15,14 @@ public class Level {
             "                    ",
             "                    ",
             "                    ",
+            "                    ",
             "          L         ",
-            "          L         ",
-            "          L         ",
-            "          L SSSSSSSS",
-            "          L         ",
-            "          L         ",
-            "          L         ",
-            "          L         ",
+            "                    ",
+            "          S         ",
+            "    S               ",
+            "          S         ",
+            "     S              ",
+            "     S    S         ",
             "SSSSSSSSSSSSSSSSSSSS"
         };
         
@@ -37,6 +37,6 @@ public class Level {
         }
         
         ninja = new Ninja();
-        stage.addActor(ninja, 100, 500);
+        stage.addActor(ninja, 100, 0);
     }
 }

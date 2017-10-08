@@ -1,5 +1,3 @@
-import mayflower.*;
-
 /**
  * @author Shivashriganesh Mahato
  */
@@ -8,6 +6,7 @@ public class Ninja extends MovableAnimatedActor {
         String[] runFileNames = new String[8];
         for (int i = 1; i <= 8; i++) {
             runFileNames[i - 1] = "resources/sprites/ninja/NinjaRun" + i + ".png";
+            runFileNames[i - 1] = "resources/sprites/ninja/NinjaRun1.png";
         }
         
         Animation run = new Animation(60, runFileNames);
