@@ -19,11 +19,11 @@ public class Level {
             "          L         ",
             "                    ",
             "          S         ",
-            "    S               ",
+            "                    ",
             "          S         ",
-            "     S              ",
-            "     S    S         ",
-            "SSSSSSSSSSSSSSSSSSSS"
+            "          S         ",
+            "    S     S         ",
+            "SSSS SSSSSSSSSSSSSSS"
         };
         
         for (int r = 0; r < map.length; r++) {

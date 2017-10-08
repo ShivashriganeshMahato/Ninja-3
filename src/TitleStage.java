@@ -17,7 +17,7 @@ public class TitleStage extends Stage {
         setBackground(background);
 
         // ␣
-        if (kb.isKeyPressed("␣")) {
+        if (kb.isKeyPressed("space")) {
             Mayflower mf = getMayflower();
             mf.setStage(new GameStage());
         }
