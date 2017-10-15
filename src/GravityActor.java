@@ -51,8 +51,4 @@ public class GravityActor extends Actor {
 
         return landed;
     }
-    
-    /*public boolean isFalling() {
-        return !isBlocked();
-    }*/
 }

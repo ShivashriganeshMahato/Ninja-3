@@ -7,6 +7,7 @@ import mayflower.*;
  * @version (a version number or a date)
  */
 public class MovableAnimatedActor extends AnimatedActor {
+    private Animation idle;
     private Animation run;
 
     private final float Max_SX = 5;
@@ -21,6 +22,7 @@ public class MovableAnimatedActor extends AnimatedActor {
         super();
 
         run = null;
+        idle = null;
         vx = 0;
         xNxt = 0;
         dummy = new GravityActor();
@@ -36,13 +38,16 @@ public class MovableAnimatedActor extends AnimatedActor {
         if (kb.isKeyPressed("left")) {
             isColliding[0] = false;
             vx = -Max_SX;
+            //setAnimation(run);
         } else if (kb.isKeyPressed("right")) {
             isColliding[1] = false;
             vx = Max_SX;
+            //setAnimation(run);
         } else {
             if (vx != 0) {
                 vx -= Math.signum(vx) * AxMax;
             }
+            //setAnimation(idle);
         }
 
         if (isLanded && kb.isKeyPressed("up")) {
@@ -80,6 +85,11 @@ public class MovableAnimatedActor extends AnimatedActor {
                     isColliding[1] = false;
                 }
             }
+            if (actor instanceof Ladder && isTouching(actor)) {
+                if (kb.isKeyPressed("up")) {
+                    vy = 3;
+                }
+            }
         }
 
         if (isColliding[0] || isColliding[1])
@@ -89,5 +99,9 @@ public class MovableAnimatedActor extends AnimatedActor {
 
     public void setRunAnimation(Animation ani) {
         run = ani;
+    }
+    
+    public void setIdleAnimation(Animation ani) {
+        idle = ani;
     }
 }
