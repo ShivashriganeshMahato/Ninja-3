@@ -105,6 +105,8 @@ public class MovableAnimatedActor extends AnimatedActor {
             if (actor instanceof Ladder && isTouching(actor)) {
                 if (kb.isKeyPressed("up")) {
                     vy = 3;
+                    if (getAnimation() != runRight && getAnimation() != runLeft)
+                        setAnimation(isLeft ? runLeft : runRight);
                 }
             }
         }
