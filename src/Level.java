@@ -1,4 +1,9 @@
-import mayflower.*;
+import mayflower.Actor;
+import mayflower.Stage;
+import mayflower.Text;
+
+import java.awt.*;
+import java.util.HashMap;
 
 /**
  * @author Shivashriganesh Mahato
@@ -10,7 +15,9 @@ public class Level {
     
     public Level(Stage stage) {
         this.stage = stage;
-        
+
+        HashMap<Point, SpecialItem> specialItems = new HashMap<>();
+
         map = new String[] {
             "                    ",
             "                    ",
@@ -19,7 +26,7 @@ public class Level {
             "                    ",
             "                    ",
             "                T   ",
-            "                    ",
+            "     X X  X    X X  ",
             "                 L  ",
             "          B      L  ",
             "              K     ",
@@ -47,9 +54,16 @@ public class Level {
                     case 'T':
                         stage.addActor(new Turret(), c * 40 + 20, r * 40 + 20);
                         break;
+                    case 'X':
+                        specialItems.put(new Point(c * 40 + 20, r * 40 + 20), new SpecialItem());
+                        break;
                 }
             }
         }
+
+        int SIInd = (int) Math.floor(Math.random() * specialItems.size());
+        Point[] keys = specialItems.keySet().toArray(new Point[specialItems.size()]);
+        stage.addActor(specialItems.get(keys[SIInd]), keys[SIInd].x, keys[SIInd].y);
         
         ninja = new Ninja(3);
         stage.addActor(ninja, 100, 0);

@@ -3,10 +3,10 @@ import mayflower.*;
 /**
  * @author Shivashriganesh Mahato
  */
-public abstract class Collectable extends Actor {
+public abstract class Collectible extends Actor {
     private Picture sprite;
     
-    public Collectable(String spritePath) {
+    public Collectible(String spritePath) {
         sprite = new Picture(spritePath);
         sprite.resize(50, 50);
     }
