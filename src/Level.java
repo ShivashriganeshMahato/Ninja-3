@@ -23,24 +23,30 @@ public class Level {
             "                 L  ",
             "          B      L  ",
             "              K     ",
-            "          BBBBB     ",
-            "          BBBBB     ",
-            "    B  S  BBBBB     ",
-            "BBBB BBBBBBBBBBBBBBB"
+            "                    ",
+            "                    ",
+            "                    ",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
         };
         
         for (int r = 0; r < map.length; r++) {
             for (int c = 0; c < map[r].length(); c++) {
-                if (map[r].charAt(c) == 'B') {
-                    stage.addActor(new Block(), c * 40 + 20, r * 40 + 20);
-                } else if (map[r].charAt(c) == 'S') {
-                    stage.addActor(new Spike(), c * 40 + 20, r * 40 + 20);
-                } else if (map[r].charAt(c) == 'K') {
-                    stage.addActor(new KitKat(), c * 40 + 20, r * 40 + 20);
-                } else if (map[r].charAt(c) == 'L') {
-                    stage.addActor(new Ladder(), c * 40 + 20, r * 40 + 20);
-                } else if (map[r].charAt(c) == 'T') {
-                    stage.addActor(new Turret(), c * 40 + 20, r * 40 + 20);
+                switch (map[r].charAt(c)) {
+                    case 'B':
+                        stage.addActor(new Block(), c * 40 + 20, r * 40 + 20);
+                        break;
+                    case 'S':
+                        stage.addActor(new Spike(), c * 40 + 20, r * 40 + 20);
+                        break;
+                    case 'K':
+                        stage.addActor(new KitKat(), c * 40 + 20, r * 40 + 20);
+                        break;
+                    case 'L':
+                        stage.addActor(new Ladder(), c * 40 + 20, r * 40 + 20);
+                        break;
+                    case 'T':
+                        stage.addActor(new Turret(), c * 40 + 20, r * 40 + 20);
+                        break;
                 }
             }
         }
@@ -52,8 +58,12 @@ public class Level {
     public void update() {
         for (Actor actor : stage.getActors()) {
             if (!(actor instanceof Ninja || actor instanceof Text || actor instanceof HudActor)) {
-//                actor.move(1, "West");
+                actor.move(1, "West");
+                if (actor.getX() < -actor.getWidth() / 2)
+                    stage.removeActor(actor);
             }
         }
+
+        System.out.println(stage.getActors().length);
     }
 }

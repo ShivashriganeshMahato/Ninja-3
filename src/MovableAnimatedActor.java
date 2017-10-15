@@ -7,8 +7,15 @@ import mayflower.*;
  * @version (a version number or a date)
  */
 public class MovableAnimatedActor extends AnimatedActor {
-    private Animation idle;
-    private Animation run;
+    private Animation idleRight;
+    private Animation idleLeft;
+    private Animation runRight;
+    private Animation runLeft;
+    private Animation jumpRight;
+    private Animation jumpLeft;
+    private Animation fallRight;
+    private Animation fallLeft;
+    private boolean isLeft;
 
     private final float Max_SX = 5;
     private final float AxMax = .25f;
@@ -21,8 +28,8 @@ public class MovableAnimatedActor extends AnimatedActor {
     public MovableAnimatedActor() {
         super();
 
-        run = null;
-        idle = null;
+        runRight = runLeft = idleRight = idleLeft = jumpRight = jumpLeft = fallRight = fallLeft = null;
+        isLeft = false;
         vx = 0;
         xNxt = 0;
         dummy = new GravityActor();
@@ -38,22 +45,32 @@ public class MovableAnimatedActor extends AnimatedActor {
         if (kb.isKeyPressed("left")) {
             isColliding[0] = false;
             vx = -Max_SX;
-            //setAnimation(run);
+            isLeft = true;
+            if (isLanded && getAnimation() != runLeft)
+                setAnimation(runLeft);
         } else if (kb.isKeyPressed("right")) {
             isColliding[1] = false;
             vx = Max_SX;
-            //setAnimation(run);
+            isLeft = false;
+            if (isLanded && getAnimation() != runRight)
+                setAnimation(runRight);
         } else {
             if (vx != 0) {
                 vx -= Math.signum(vx) * AxMax;
             }
-            //setAnimation(idle);
+            if (isLanded && getAnimation() != idleRight && getAnimation() != idleLeft)
+                setAnimation(isLeft ? idleLeft : idleRight);
         }
 
         if (isLanded && kb.isKeyPressed("up")) {
             isLanded = false;
             vy = (float) Math.sqrt(2 * Gravity * MaxJumpH);
+            if (getAnimation() != jumpRight && getAnimation() != jumpLeft)
+                setAnimation(isLeft ? jumpLeft : jumpRight);
         }
+
+        if (!isLanded && vy < 0 && getAnimation() != fallRight && getAnimation() != fallLeft)
+            setAnimation(isLeft ? fallLeft : fallRight);
 
         dummy.setPosition(getX() + vx, getY());
         xNxt = getX() + vx;
@@ -92,16 +109,43 @@ public class MovableAnimatedActor extends AnimatedActor {
             }
         }
 
+        if (vx > 0 && xNxt + getWidth() / 2 > 800)
+            vx = 0;
+
         if (isColliding[0] || isColliding[1])
             vx = 0;
         move(vx, "east");
     }
 
-    public void setRunAnimation(Animation ani) {
-        run = ani;
+    public void setRunRightAnimation(Animation ani) {
+        runRight = ani;
+    }
+
+    public void setRunLeftAnimation(Animation ani) {
+        runLeft = ani;
     }
     
-    public void setIdleAnimation(Animation ani) {
-        idle = ani;
+    public void setIdleRightAnimation(Animation ani) {
+        idleRight = ani;
+    }
+
+    public void setIdleLeftAnimation(Animation ani) {
+        idleLeft = ani;
+    }
+
+    public void setJumpRightAnimation(Animation ani) {
+        jumpRight = ani;
+    }
+
+    public void setJumpLeftAnimation(Animation ani) {
+        jumpLeft = ani;
+    }
+
+    public void setFallRightAnimation(Animation ani) {
+        fallRight = ani;
+    }
+
+    public void setFallLeftAnimation(Animation ani) {
+        fallLeft = ani;
     }
 }

@@ -25,6 +25,10 @@ public class Animation {
         currentFrame = (currentFrame + 1) % frames.length;
         return curFrame;
     }
+
+    public void reset() {
+        currentFrame = 0;
+    }
     
     public void resize(int w, int h) {
         for (Picture frame : frames) {

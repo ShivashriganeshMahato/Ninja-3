@@ -28,6 +28,9 @@ public class Bullet extends Obstacle {
 
         move(vx, "East");
         move(vy, "North");
+
+        if (getX() > 800 + getWidth() / 2 || getY() > 600 + getHeight() / 2 || getY() < -getHeight() / 2)
+            getStage().removeActor(this);
     }
 
     @Override

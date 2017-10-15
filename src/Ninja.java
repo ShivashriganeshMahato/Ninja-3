@@ -15,20 +15,55 @@ public class Ninja extends MovableAnimatedActor {
             runFileNames[i - 1] = "resources/sprites/ninja/NinjaRun" + i + ".png";
         }
         
-        Animation run = new Animation(60, runFileNames);
-        run.resizeHeight(100);
-        setRunAnimation(run);
+        Animation runRight = new Animation(60, runFileNames);
+        runRight.resizeHeight(100);
+        setRunRightAnimation(runRight);
+
+        Animation runLeft = new Animation(60, runFileNames);
+        runLeft.resizeHeight(100);
+        runLeft.flipHorizontal();
+        setRunLeftAnimation(runLeft);
         
         String[] idleFileNames = new String[3];
         for (int i = 1; i <= 3; i++) {
             idleFileNames[i - 1] = "resources/sprites/ninja/NinjaIdle" + i + ".png";
         }
         
-        Animation idle = new Animation(200, idleFileNames);
-        idle.resizeHeight(100);
-        setIdleAnimation(idle);
+        Animation idleRight = new Animation(200, idleFileNames);
+        idleRight.resizeHeight(100);
+        setIdleRightAnimation(idleRight);
+
+        Animation idleLeft = new Animation(200, idleFileNames);
+        idleLeft.resizeHeight(100);
+        idleLeft.flipHorizontal();
+        setIdleLeftAnimation(idleLeft);
+
+        String[] jumpFileNames = new String[3];
+        for (int i = 1; i <= 3; i++) {
+            jumpFileNames[i - 1] = "resources/sprites/ninja/NinjaJump" + i + ".png";
+        }
+
+        Animation jumpRight = new Animation(120, jumpFileNames);
+        jumpRight.resizeHeight(100);
+        setJumpRightAnimation(jumpRight);
+
+        Animation jumpLeft = new Animation(120, jumpFileNames);
+        jumpLeft.resizeHeight(100);
+        jumpLeft.flipHorizontal();
+        setJumpLeftAnimation(jumpLeft);
+
+        String[] fallFileNames = {"resources/sprites/ninja/NinjaFall.png"};
+
+        Animation fallRight = new Animation(1, fallFileNames);
+        fallRight.resizeHeight(100);
+        setFallRightAnimation(fallRight);
+
+        Animation fallLeft = new Animation(1, fallFileNames);
+        fallLeft.resizeHeight(100);
+        fallLeft.flipHorizontal();
+        setFallLeftAnimation(fallLeft);
         
-        setAnimation(run);
+        setAnimation(idleRight);
         
         lives = startingLives;
         score = 0;
