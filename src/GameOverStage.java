@@ -12,6 +12,13 @@ public class GameOverStage extends Stage {
     }
     
     public void update() {
+        Keyboard kb = getKeyboard();
+
         setBackground(background);
+
+        if (kb.isKeyPressed("space")) {
+            Mayflower mf = getMayflower();
+            mf.setStage(new GameStage(1, 0));
+        }
     }
 }

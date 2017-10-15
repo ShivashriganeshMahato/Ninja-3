@@ -13,28 +13,11 @@ public class Level {
     private String[] map;
     private Ninja ninja;
     
-    public Level(Stage stage) {
+    public Level(Stage stage, String[] map) {
         this.stage = stage;
+        this.map = map;
 
         HashMap<Point, SpecialItem> specialItems = new HashMap<>();
-
-        map = new String[] {
-            "                    ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "                T   ",
-            "     X X  X    X X  ",
-            "                 L  ",
-            "          B      L  ",
-            "              K     ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-        };
         
         for (int r = 0; r < map.length; r++) {
             for (int c = 0; c < map[r].length(); c++) {
@@ -56,6 +39,9 @@ public class Level {
                         break;
                     case 'X':
                         specialItems.put(new Point(c * 40 + 20, r * 40 + 20), new SpecialItem());
+                        break;
+                    case 'E':
+                        stage.addActor(new EndPortal(), c * 40 + 20, r * 40 + 20);
                         break;
                 }
             }
