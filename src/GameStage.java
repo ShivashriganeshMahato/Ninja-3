@@ -1,5 +1,7 @@
 import mayflower.*;
 
+import java.awt.*;
+
 /**
  * @author Shivashriganesh Mahato
  */
@@ -66,6 +68,7 @@ public class GameStage extends Stage {
     private HudActor redOverlay;
     private int curLevel;
     private int score;
+    private Picture background;
     
     public GameStage(int level, int curScore) {
         this.curLevel = level;
@@ -73,8 +76,11 @@ public class GameStage extends Stage {
         score = curScore;
 
         lives = new Text("Lives: ");
+        lives.setColor(Color.WHITE);
         scoreBoard = new Text("Score: ");
+        scoreBoard.setColor(Color.WHITE);
         levelDisp = new Text("Level " + curLevel);
+        levelDisp.setColor(Color.WHITE);
         redOverlay = new HudActor("resources/sprites/Block.png");
         redOverlay.resize(800, 600);
         
@@ -82,9 +88,14 @@ public class GameStage extends Stage {
         addActor(scoreBoard, 10, 40);
         addActor(redOverlay, 400, 300);
         addActor(levelDisp, 700, 10);
+
+        background = new Picture("resources/sprites/Background.jpg");
+        background.resize(800, 600);
     }
     
     public void update() {
+        setBackground(background);
+
         level.update();
         
         if (gameChar == null) {

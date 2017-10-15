@@ -7,7 +7,7 @@ import mayflower.Mayflower;
 public class EndPortal extends Actor {
     @Override
     public void update() {
-        setPicture("resources/sprites/Block.png");
+        setPicture("resources/sprites/EndPortal.png");
 
         for (Actor actor : getTouching()) {
             if (actor instanceof Ninja) {
