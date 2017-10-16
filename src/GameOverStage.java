@@ -16,6 +16,7 @@ public class GameOverStage extends Stage {
 
         setBackground(background);
 
+        // Go back to the game on space press
         if (kb.isKeyPressed("space")) {
             Mayflower mf = getMayflower();
             mf.setStage(new GameStage(1, 0));

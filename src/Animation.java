@@ -11,6 +11,7 @@ public class Animation {
     public Animation(int frameRate, String[] images) {
         this.frameRate = frameRate;
         frames = new Picture[images.length];
+        // Add Pictures to frames based on the file names given by images
         for (int i = 0; i < frames.length; i++) {
             frames[i] = new Picture(images[i]);
         }
@@ -35,14 +36,20 @@ public class Animation {
             frame.resize(w, h);
         }
     }
-    
+
+    /**
+     * Define a height for the sprites and the program calculates an appropriate width by maintaining the aspect ratio
+     *
+     * @param h The new height
+     */
     public void resizeHeight(int h) {
         for (Picture frame : frames) {
             int nW = (frame.getWidth() * h / frame.getHeight());
             frame.resize(nW, h);
         }
     }
-    
+
+    @Deprecated
     public void setTransparency(int percent) {
         for (Picture frame : frames) {
             frame.setTransparency(percent);

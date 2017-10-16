@@ -1,10 +1,7 @@
 import mayflower.*;
 
 /**
- * Write a description of class MovableAnimatedActor here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Shivashriganesh Mahato
  */
 public class MovableAnimatedActor extends AnimatedActor {
     private Animation idleRight;

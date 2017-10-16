@@ -17,10 +17,14 @@ public class Level {
         this.stage = stage;
         this.map = map;
 
+        // Define a set of special items with corresponding points in the Stage. One will later be chosen at random to
+        // actually be added to the world
         HashMap<Point, SpecialItem> specialItems = new HashMap<>();
-        
+
+        // Loop through each character in the level map and generate Actors accordingly
         for (int r = 0; r < map.length; r++) {
             for (int c = 0; c < map[r].length(); c++) {
+                // Check what the character is at this point in the map, and add a specific Actor accordingly
                 switch (map[r].charAt(c)) {
                     case 'B':
                         stage.addActor(new Block(), c * 40 + 20, r * 40 + 20);
@@ -38,6 +42,8 @@ public class Level {
                         stage.addActor(new Turret(), c * 40 + 20, r * 40 + 20);
                         break;
                     case 'X':
+                        // Instead of adding a SpecialItem to the Stage, it is added to the set of special items so one
+                        // can be selected at random for actual entry into the Stage later
                         specialItems.put(new Point(c * 40 + 20, r * 40 + 20), new SpecialItem());
                         break;
                     case 'E':
@@ -47,15 +53,19 @@ public class Level {
             }
         }
 
+        // Randomly select a location for the SpecialItem and add it to the Stage
         int SIInd = (int) Math.floor(Math.random() * specialItems.size());
         Point[] keys = specialItems.keySet().toArray(new Point[specialItems.size()]);
         stage.addActor(specialItems.get(keys[SIInd]), keys[SIInd].x, keys[SIInd].y);
-        
+
+        // Add the ninja
         ninja = new Ninja(3);
         stage.addActor(ninja, 100, 0);
     }
     
     public void update() {
+        // Move all Actors to the left, except for the Ninja and any HUD items. This gives the illusion that the screen
+        // is scrolling
         for (Actor actor : stage.getActors()) {
             if (!(actor instanceof Ninja || actor instanceof Text || actor instanceof HudActor)) {
                 actor.move(1, "West");
@@ -63,7 +73,5 @@ public class Level {
                     stage.removeActor(actor);
             }
         }
-
-        System.out.println(stage.getActors().length);
     }
 }

@@ -27,6 +27,7 @@ public class AnimatedActor extends GravityActor {
         super.update();
 
         if (animation != null) {
+            // If the timer reaches a threshold, update the animation to the next frame
             if (animationTimer.hasTimePassed(animation.getFrameRate())) {
                 animationTimer.reset();
                 setPicture(animation.getNextFrame());

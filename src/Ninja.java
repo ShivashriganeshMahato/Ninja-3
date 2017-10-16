@@ -1,7 +1,7 @@
 import mayflower.*;
 
 /**
- * @author Shivashriganesh Mahato
+ * @author Shivashriganesh Mahato, Sugam Arora
  */
 public class Ninja extends MovableAnimatedActor {   
     private int lives;

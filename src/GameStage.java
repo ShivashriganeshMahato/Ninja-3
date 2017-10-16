@@ -6,6 +6,7 @@ import java.awt.*;
  * @author Shivashriganesh Mahato
  */
 public class GameStage extends Stage {
+    // Level maps
     private final String[][] lvlMaps = {
             {
                     "                    ",
@@ -71,6 +72,7 @@ public class GameStage extends Stage {
     private Picture background;
     
     public GameStage(int level, int curScore) {
+        // Create a new level passing in the level map corresponding with the current level
         this.curLevel = level;
         this.level = new Level(this, lvlMaps[curLevel - 1]);
         score = curScore;
@@ -81,7 +83,7 @@ public class GameStage extends Stage {
         scoreBoard.setColor(Color.WHITE);
         levelDisp = new Text("Level " + curLevel);
         levelDisp.setColor(Color.WHITE);
-        redOverlay = new HudActor("resources/sprites/Block.png");
+        redOverlay = new HudActor("resources/sprites/RedOverlay.png");
         redOverlay.resize(800, 600);
         
         addActor(lives, 10, 10);
@@ -97,7 +99,8 @@ public class GameStage extends Stage {
         setBackground(background);
 
         level.update();
-        
+
+        // Get a reference to the level's Ninja (stored in gameChar)
         if (gameChar == null) {
             for (Actor actor : getActors()) {
                 if (actor instanceof Ninja) {
@@ -105,18 +108,22 @@ public class GameStage extends Stage {
                 }
             }
         }
-        
+
+        // If the player's lives reach 0 or the player falls off, the game is over
         if (gameChar.getLives() <= 0 || gameChar.getY() > 700) {
             Mayflower mf = getMayflower();
             mf.setStage(new GameOverStage());
         }
-        
+
+        // When the player is damaged, fade out a red overlay to indicate invulnerability. While the overlay is fading
+        // out, the player is invulnerable to damage. After it has faded out, the player can be damaged again
         if (gameChar.isDamaged()) {
             redOverlay.setTransparency((int) (((gameChar.getTimePassed() / 1500.0) * 50) + 50));
         } else {
             redOverlay.setTransparency(100);
         }
-        
+
+        // Display current lives and score of player
         lives.setText("Lives: " + gameChar.getLives());
         scoreBoard.setText("Score: " + (score + gameChar.getPoints()));
     }
