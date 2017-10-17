@@ -1,4 +1,4 @@
-import mayflower.*;
+import mayflower.Mayflower;
 
 /**
  * Runs the game

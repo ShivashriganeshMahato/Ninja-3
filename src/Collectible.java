@@ -1,4 +1,5 @@
-import mayflower.*;
+import mayflower.Actor;
+import mayflower.Picture;
 
 /**
  * Entity that a character is able to "pick up". Once this occurs, it removes itself from the Stage
@@ -7,7 +8,7 @@ import mayflower.*;
  */
 public abstract class Collectible extends Actor {
     private Picture sprite;
-    
+
     public Collectible(String spritePath) {
         sprite = new Picture(spritePath);
         sprite.resize(50, 50);
@@ -20,7 +21,7 @@ public abstract class Collectible extends Actor {
      * @param ninja The level's Ninja that has "collected" this item
      */
     protected abstract void onCollect(Ninja ninja);
-    
+
     public void update() {
         setPicture(sprite);
 

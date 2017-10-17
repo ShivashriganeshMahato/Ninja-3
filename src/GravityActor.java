@@ -1,4 +1,4 @@
-import mayflower.*;
+import mayflower.Actor;
 
 /**
  * Actor affected by a defined gravity. Collides with blocks

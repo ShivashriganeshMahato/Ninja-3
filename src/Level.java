@@ -14,7 +14,7 @@ public class Level {
     private Stage stage;
     private String[] map;
     private Ninja ninja;
-    
+
     public Level(Stage stage, String[] map) {
         this.stage = stage;
         this.map = map;
@@ -63,10 +63,10 @@ public class Level {
         }
 
         // Add the ninja
-        ninja = new Ninja(30);
+        ninja = new Ninja(5);
         stage.addActor(ninja, 100, 0);
     }
-    
+
     public void update() {
         // Move all Actors to the left, except for the Ninja and any HUD items. This gives the illusion that the screen
         // is scrolling

@@ -1,4 +1,4 @@
-import mayflower.*;
+import mayflower.Timer;
 
 /**
  * Main game Actor. It is a MovableAnimatedActor that has properties of a ninja (appropriate animations, temporary
@@ -6,12 +6,12 @@ import mayflower.*;
  *
  * @author Shivashriganesh Mahato, Sugam Arora
  */
-public class Ninja extends MovableAnimatedActor {   
+public class Ninja extends MovableAnimatedActor {
     private int lives;
     private int score;
     private Timer dmgTimer;
     private boolean isDamaged;
-    
+
     public Ninja(int startingLives) {
         // Initialize animations with appropriate sprite sets
 
@@ -19,7 +19,7 @@ public class Ninja extends MovableAnimatedActor {
         for (int i = 1; i <= 8; i++) {
             runFileNames[i - 1] = "resources/sprites/ninja/NinjaRun" + i + ".png";
         }
-        
+
         Animation runRight = new Animation(60, runFileNames);
         runRight.resizeHeight(100);
         setRunRightAnimation(runRight);
@@ -28,12 +28,12 @@ public class Ninja extends MovableAnimatedActor {
         runLeft.resizeHeight(100);
         runLeft.flipHorizontal();
         setRunLeftAnimation(runLeft);
-        
+
         String[] idleFileNames = new String[3];
         for (int i = 1; i <= 3; i++) {
             idleFileNames[i - 1] = "resources/sprites/ninja/NinjaIdle" + i + ".png";
         }
-        
+
         Animation idleRight = new Animation(200, idleFileNames);
         idleRight.resizeHeight(100);
         setIdleRightAnimation(idleRight);
@@ -67,15 +67,15 @@ public class Ninja extends MovableAnimatedActor {
         fallLeft.resizeHeight(100);
         fallLeft.flipHorizontal();
         setFallLeftAnimation(fallLeft);
-        
+
         setAnimation(idleRight);
-        
+
         lives = startingLives;
         score = 0;
         dmgTimer = new Timer();
         isDamaged = false;
     }
-    
+
     public void update() {
         super.update();
 
@@ -93,7 +93,7 @@ public class Ninja extends MovableAnimatedActor {
             dmgTimer.reset();
         }
     }
-    
+
     public void lowerLives(int amount) {
         // As long as the player is vulnerable, apply the damage
         if (!isDamaged) {
@@ -101,23 +101,23 @@ public class Ninja extends MovableAnimatedActor {
             isDamaged = true;
         }
     }
-    
+
     public int getLives() {
         return lives;
     }
-    
+
     public void addPoints(int amount) {
         score += amount;
     }
-    
+
     public int getPoints() {
         return score;
     }
-    
+
     public int getTimePassed() {
         return dmgTimer.getTimePassed();
     }
-    
+
     public boolean isDamaged() {
         return isDamaged;
     }

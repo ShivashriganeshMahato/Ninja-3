@@ -28,21 +28,21 @@ public class GameStage extends Stage {
                     "                                                                                        "
             },
             {
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        ",
-                    "                                                                                                        "
+                    "                                                                                                                                      ",
+                    "                                                                                                                                      ",
+                    "                                                                                       T                                              ",
+                    "                                                                                                                                      ",
+                    "                                                                                                                                      ",
+                    "                                                                                        K    BB                                       ",
+                    "                                                                                     K BBBB      B   B   K  K                         ",
+                    "                T                              T                          S   BBBBBB B                   B  B  B                      ",
+                    "                                                                        BBBB                                                          ",
+                    "                           X                                        BBB          T                                 BBBB  S            ",
+                    "                L      B  BBB                X   S        BBBBBBBB                                                      BBB S         ",
+                    "        K  T    K    B          S K         BBBBBBBBBBBB                                                                   BBB        ",
+                    "     BBBBBB        B          BBBBB        L                                                                                  BB      ",
+                    "            BBBBB                    BBBBBBB                                                                                     BB  E",
+                    "                                                                                                                                    BB"
             },
             {
                     "                                                    T                                                                                                                                              ",
@@ -73,7 +73,7 @@ public class GameStage extends Stage {
     private int score;
     private Picture background;
     private boolean isWon;
-    
+
     public GameStage(int level, int curScore) {
         // Create a new level passing in the level map corresponding with the current level
         this.curLevel = level;
@@ -93,7 +93,7 @@ public class GameStage extends Stage {
         levelDisp.setColor(Color.WHITE);
         redOverlay = new HudActor("resources/sprites/RedOverlay.png");
         redOverlay.resize(800, 600);
-        
+
         addActor(lives, 10, 10);
         addActor(scoreBoard, 10, 40);
         addActor(redOverlay, 400, 300);
@@ -102,7 +102,7 @@ public class GameStage extends Stage {
         background = new Picture("resources/sprites/Background.jpg");
         background.resize(800, 600);
     }
-    
+
     public void update() {
         // Flag is true only when inputted level doesn't exist. In this case, go to win screen and exit method
         if (isWon) {
@@ -124,10 +124,16 @@ public class GameStage extends Stage {
             }
         }
 
-        // If the player's lives reach 0 or the player falls off, the game is over
-        if (gameChar.getLives() <= 0 || gameChar.getY() > 700) {
+        // If the player's lives reach 0, the game is over
+        if (gameChar.getLives() <= 0) {
             Mayflower mf = getMayflower();
             mf.setStage(new GameOverStage());
+        }
+
+        // If the player falls off the screen, reduce health and respawn at the top
+        if (gameChar.getY() > 700) {
+            gameChar.lowerLives(2);
+            gameChar.setPosition(gameChar.getX(), 0);
         }
 
         // When the player is damaged, fade out a red overlay to indicate invulnerability. While the overlay is fading

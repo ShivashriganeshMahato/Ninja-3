@@ -1,4 +1,4 @@
-import mayflower.*;
+import mayflower.Actor;
 
 /**
  * General block for player to stand on

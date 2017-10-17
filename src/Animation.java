@@ -1,4 +1,4 @@
-import mayflower.*;
+import mayflower.Picture;
 
 /**
  * Holds a set of sprites and runs through them every frame (with inputted frame rate)
@@ -9,7 +9,7 @@ public class Animation {
     private Picture[] frames;
     private int frameRate;
     private int currentFrame;
-    
+
     public Animation(int frameRate, String[] images) {
         this.frameRate = frameRate;
         frames = new Picture[images.length];
@@ -18,11 +18,11 @@ public class Animation {
             frames[i] = new Picture(images[i]);
         }
     }
-    
+
     public int getFrameRate() {
         return frameRate;
     }
-    
+
     public Picture getNextFrame() {
         Picture curFrame = frames[currentFrame];
         currentFrame = (currentFrame + 1) % frames.length;
@@ -32,7 +32,7 @@ public class Animation {
     public void reset() {
         currentFrame = 0;
     }
-    
+
     public void resize(int w, int h) {
         for (Picture frame : frames) {
             frame.resize(w, h);
@@ -57,13 +57,13 @@ public class Animation {
             frame.setTransparency(percent);
         }
     }
-    
+
     public void flipHorizontal() {
         for (Picture frame : frames) {
             frame.flipHorizontal();
         }
     }
-    
+
     public void setBounds(int x, int y, int w, int h) {
         for (Picture frame : frames) {
             frame.setBounds(x, y, w, h);

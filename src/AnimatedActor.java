@@ -1,4 +1,4 @@
-import mayflower.*;
+import mayflower.Timer;
 
 /**
  * An Actor affected by gravity that plays an animation as its sprite

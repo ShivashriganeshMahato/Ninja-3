@@ -1,4 +1,5 @@
-import mayflower.*;
+import mayflower.Actor;
+import mayflower.Keyboard;
 
 /**
  * AnimatedActor that is able to move horizontally and jump
@@ -134,8 +135,8 @@ public class MovableAnimatedActor extends AnimatedActor {
             }
         }
 
-        // Stop Actor from moving too far right of screen
-        if (vx > 0 && xNxt + getWidth() / 2 > 800)
+        // Stop Actor from moving too far right or left of screen
+        if ((vx > 0 && xNxt + getWidth() / 2 > 800) || (vx < 0 && xNxt - getWidth() / 2 < 0))
             vx = 0;
 
         // If a collision was detected, stop horizontal movement
@@ -153,7 +154,7 @@ public class MovableAnimatedActor extends AnimatedActor {
     public void setRunLeftAnimation(Animation ani) {
         runLeft = ani;
     }
-    
+
     public void setIdleRightAnimation(Animation ani) {
         idleRight = ani;
     }
