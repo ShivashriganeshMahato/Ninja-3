@@ -1,6 +1,8 @@
 import mayflower.*;
 
 /**
+ * Displays game over screen
+ *
  * @author Shivashriganesh Mahato
  */
 public class GameOverStage extends Stage {
@@ -16,7 +18,7 @@ public class GameOverStage extends Stage {
 
         setBackground(background);
 
-        // Go back to the game on space press
+        // Go back to the game on space press (to play again)
         if (kb.isKeyPressed("space")) {
             Mayflower mf = getMayflower();
             mf.setStage(new GameStage(1, 0));

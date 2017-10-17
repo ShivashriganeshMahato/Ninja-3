@@ -1,6 +1,8 @@
 import mayflower.*;
 
 /**
+ * Entity that a character is able to "pick up". Once this occurs, it removes itself from the Stage
+ *
  * @author Shivashriganesh Mahato
  */
 public abstract class Collectible extends Actor {

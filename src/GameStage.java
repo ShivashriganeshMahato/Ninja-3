@@ -3,61 +3,63 @@ import mayflower.*;
 import java.awt.*;
 
 /**
+ * Manages game screen, based on inputted level and starting score
+ *
  * @author Shivashriganesh Mahato
  */
 public class GameStage extends Stage {
     // Level maps
     private final String[][] lvlMaps = {
             {
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                T   ",
-                    "     X X  X    X X  ",
-                    "                 L  ",
-                    "          B      L  ",
-                    "              K     ",
-                    "                    ",
-                    "                    ",
-                    "                    E",
-                    "BBBBBBB    BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+                    "                                             X                                          ",
+                    "                                                                                        ",
+                    "                                        BB                                              ",
+                    "                                   X                                                    ",
+                    "                    BB            BBB                                                   ",
+                    "                                                                                        ",
+                    "                                                                                        ",
+                    "BBBBBBBBBB      BB                                                          B B         ",
+                    "                                            SS      SS                    B B B       E ",
+                    "           BB                              BBBBBBBBBBBBBB               B B B B      BBB",
+                    "                                 K    BB                  S           B B B B B         ",
+                    "                        BB      BBB                      BBBBB      B B B B B B         ",
+                    "                                                                  B B B B B B B         ",
+                    "                                                               BB B B B B B B B         ",
+                    "                                                                                        "
             },
             {
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                T   ",
-                    "     X X  X    X X  ",
-                    "                 L  ",
-                    "          B      L  ",
-                    "              K     ",
-                    "      BBBBB            ",
-                    "                    ",
-                    "                    E",
-                    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        ",
+                    "                                                                                                        "
             },
             {
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                    ",
-                    "                T   ",
-                    "     X X  X    X X  ",
-                    "                 L  ",
-                    "        T B      L  ",
-                    "      X       K     ",
-                    "        T     T     ",
-                    "                    ",
-                    "            T       E",
-                    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+                    "                                                    T                                                                                                                                              ",
+                    "                              X                         K                                         X                                                                                                ",
+                    "                                              K        BBB                                                                                                                     T          T        ",
+                    "                                             BBBL                                                                                                                                                  ",
+                    "                 T                                                                                                                                   L                             S K S           ",
+                    "                                                                   KK                                                  T  T  T  T  T  T  T           L  BBB            BBBB       BBBBBBB          ",
+                    "                                     K                         BBBBBBB                                    S                                          L                                             ",
+                    "BBBBBBBBBBBBBBBB                    BBBB           K                                                   BBBBBB                                        L           BBBB                            E ",
+                    "                    SSSSSSSS    S                 BBB                     SSS   SSS   SSS   SSS                                                      L                               T          BBB",
+                    "                  BBBBBBBBBBBBBBBB  T        K                         BBBBBBBBBBBBBBBBBBBBBBBBBBBB                                           K      L                                             ",
+                    "                                            BBB         T                                                            BBBBBBBBBBBBBBBBBBBBBBBBBB      L                                             ",
+                    "                                                                                                                                                     L                                             ",
+                    "                                                                                                                                                     L                                             ",
+                    "                                                                                                                                                    XL                                             ",
+                    "                                                                                                                                                    B                                              "
             }
     };
 
@@ -70,11 +72,17 @@ public class GameStage extends Stage {
     private int curLevel;
     private int score;
     private Picture background;
+    private boolean isWon;
     
     public GameStage(int level, int curScore) {
         // Create a new level passing in the level map corresponding with the current level
         this.curLevel = level;
-        this.level = new Level(this, lvlMaps[curLevel - 1]);
+        // If the inputted level doesn't exist, the game is won
+        try {
+            this.level = new Level(this, lvlMaps[curLevel - 1]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            isWon = true;
+        }
         score = curScore;
 
         lives = new Text("Lives: ");
@@ -96,6 +104,13 @@ public class GameStage extends Stage {
     }
     
     public void update() {
+        // Flag is true only when inputted level doesn't exist. In this case, go to win screen and exit method
+        if (isWon) {
+            Mayflower mf = getMayflower();
+            mf.setStage(new WinStage(score));
+            return;
+        }
+
         setBackground(background);
 
         level.update();

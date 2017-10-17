@@ -1,6 +1,6 @@
-import mayflower.*;
-
 /**
+ * General obstacle with spikes sprite
+ *
  * @author Shivashriganesh Mahato
  */
 public class Spike extends Obstacle {

@@ -1,6 +1,8 @@
 import mayflower.*;
 
 /**
+ * Displays title screen
+ *
  * @author Shivashriganesh Mahato
  */
 public class TitleStage extends Stage {
@@ -16,10 +18,10 @@ public class TitleStage extends Stage {
         
         setBackground(background);
 
-        // ␣
+        // Start the game when space key is pressed
         if (kb.isKeyPressed("space")) {
             Mayflower mf = getMayflower();
-            mf.setStage(new GameStage(1, 0));
+            mf.setStage(new GameStage(2, 0));
         }
     }
 }

@@ -3,6 +3,8 @@ import mayflower.*;
 import java.awt.*;
 
 /**
+ * Displays win screen (shows score)
+ *
  * @author Shivashriganesh Mahato
  */
 public class WinStage extends Stage {
@@ -22,6 +24,7 @@ public class WinStage extends Stage {
 
         setBackground(background);
 
+        // Go back to the game on space press (to play again)
         if (kb.isKeyPressed("space")) {
             Mayflower mf = getMayflower();
             mf.setStage(new GameStage(1, 0));

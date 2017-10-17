@@ -1,6 +1,8 @@
 import java.awt.*;
 
 /**
+ * Harmful entity that moves linearly towards an inputted destination point
+ *
  * @author Shivashriganesh Mahato
  */
 public class Bullet extends Obstacle {
@@ -35,8 +37,10 @@ public class Bullet extends Obstacle {
 
         // Remove this Actor if it goes out of the screen (other than if it goes off from the left, as this is handled
         // in Level)
-        if (getX() > 800 + getWidth() / 2 || getY() > 600 + getHeight() / 2 || getY() < -getHeight() / 2)
-            getStage().removeActor(this);
+        if (getX() > 800 + getWidth() / 2 || getY() > 600 + getHeight() / 2 || getY() < -getHeight() / 2) {
+            if (getStage() != null)
+                getStage().removeActor(this);
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 import mayflower.*;
 
-/** 
+/**
+ * Holds a set of sprites and runs through them every frame (with inputted frame rate)
+ *
  * @author Shivashriganesh Mahato
  */
 public class Animation {

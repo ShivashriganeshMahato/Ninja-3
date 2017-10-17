@@ -1,6 +1,9 @@
 import mayflower.*;
 
 /**
+ * Main game Actor. It is a MovableAnimatedActor that has properties of a ninja (appropriate animations, temporary
+ * invulnerability if hit, etc.)
+ *
  * @author Shivashriganesh Mahato, Sugam Arora
  */
 public class Ninja extends MovableAnimatedActor {   
@@ -10,6 +13,8 @@ public class Ninja extends MovableAnimatedActor {
     private boolean isDamaged;
     
     public Ninja(int startingLives) {
+        // Initialize animations with appropriate sprite sets
+
         String[] runFileNames = new String[8];
         for (int i = 1; i <= 8; i++) {
             runFileNames[i - 1] = "resources/sprites/ninja/NinjaRun" + i + ".png";
@@ -73,7 +78,12 @@ public class Ninja extends MovableAnimatedActor {
     
     public void update() {
         super.update();
-        
+
+        // The damage timer only increments if isDamaged is true. Once it goes up to 1.5s, isDamaged is set to false and
+        // it continuously resets every frame until damage occurs again. This makes the invulnerability feature
+        // possible: if the character is damaged by some harmful entity, it cannot be damaged again until this timer
+        // reaches the threshold of 1.5s. That way damage cannot be done simultaneously. The indicator of the timer
+        // for the player is the red fading overlay. Once it has faded out (after 1.5s), the player is vulnerable again
         if (isDamaged) {
             if (dmgTimer.hasTimePassed(1500)) {
                 isDamaged = false;
@@ -85,6 +95,7 @@ public class Ninja extends MovableAnimatedActor {
     }
     
     public void lowerLives(int amount) {
+        // As long as the player is vulnerable, apply the damage
         if (!isDamaged) {
             lives -= amount;
             isDamaged = true;

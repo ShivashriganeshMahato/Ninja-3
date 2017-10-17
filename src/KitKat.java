@@ -1,4 +1,6 @@
 /**
+ * Basic Collectible item that gives points to character
+ *
  * @author Shivashriganesh Mahato
  */
 public class KitKat extends Collectible {

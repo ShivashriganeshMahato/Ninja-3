@@ -1,6 +1,8 @@
 import mayflower.*;
 
 /**
+ * An Actor that is added to a stage for the purpose of displaying information. It is unaffected by game interactions
+ *
  * @author Shivashriganesh Mahato
  */
 public class HudActor extends Actor {

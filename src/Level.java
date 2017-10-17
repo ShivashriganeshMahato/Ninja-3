@@ -6,6 +6,8 @@ import java.awt.*;
 import java.util.HashMap;
 
 /**
+ * Generates and manages game world based on inputted map
+ *
  * @author Shivashriganesh Mahato
  */
 public class Level {
@@ -54,12 +56,14 @@ public class Level {
         }
 
         // Randomly select a location for the SpecialItem and add it to the Stage
-        int SIInd = (int) Math.floor(Math.random() * specialItems.size());
-        Point[] keys = specialItems.keySet().toArray(new Point[specialItems.size()]);
-        stage.addActor(specialItems.get(keys[SIInd]), keys[SIInd].x, keys[SIInd].y);
+        if (specialItems.size() > 0) {
+            int SIInd = (int) Math.floor(Math.random() * specialItems.size());
+            Point[] keys = specialItems.keySet().toArray(new Point[specialItems.size()]);
+            stage.addActor(specialItems.get(keys[SIInd]), keys[SIInd].x, keys[SIInd].y);
+        }
 
         // Add the ninja
-        ninja = new Ninja(3);
+        ninja = new Ninja(30);
         stage.addActor(ninja, 100, 0);
     }
     
@@ -68,7 +72,7 @@ public class Level {
         // is scrolling
         for (Actor actor : stage.getActors()) {
             if (!(actor instanceof Ninja || actor instanceof Text || actor instanceof HudActor)) {
-                actor.move(1, "West");
+                actor.move(((GameStage) stage).getCurLevel(), "West");
                 if (actor.getX() < -actor.getWidth() / 2)
                     stage.removeActor(actor);
             }

@@ -1,6 +1,8 @@
 import mayflower.*;
 
 /**
+ * Actor affected by a defined gravity. Collides with blocks
+ *
  * @author Shivashriganesh Mahato
  */
 public class GravityActor extends Actor {

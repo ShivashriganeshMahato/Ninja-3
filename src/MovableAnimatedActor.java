@@ -1,6 +1,8 @@
 import mayflower.*;
 
 /**
+ * AnimatedActor that is able to move horizontally and jump
+ *
  * @author Shivashriganesh Mahato
  */
 public class MovableAnimatedActor extends AnimatedActor {
@@ -30,50 +32,66 @@ public class MovableAnimatedActor extends AnimatedActor {
         vx = 0;
         xNxt = 0;
         dummy = new GravityActor();
+        // First element is a flag for right collision, second for left collision
         isColliding = new boolean[]{false, false};
     }
 
     public void update() {
         super.update();
 
+        int Right = 0, Left = 1; // Indexes for collision flags (for convenience)
+
         Keyboard kb = getKeyboard();
 
-        // ← → ↑
+        // Handle horizontal movement
         if (kb.isKeyPressed("left")) {
-            isColliding[0] = false;
+            // Set right collision flag to true so player doesn't get stuck after a right collision
+            isColliding[Right] = false;
+            // Make velocity negative so player moves to left
             vx = -Max_SX;
             isLeft = true;
             if (isLanded && getAnimation() != runLeft)
                 setAnimation(runLeft);
         } else if (kb.isKeyPressed("right")) {
-            isColliding[1] = false;
+            // Set left collision flag to true so player doesn't get stuck after a left collision
+            isColliding[Left] = false;
+            // Make velocity positive so player moves to right
             vx = Max_SX;
             isLeft = false;
             if (isLanded && getAnimation() != runRight)
                 setAnimation(runRight);
         } else {
+            // If the player stops pressing right and left, bring the Actor to a stop
             if (vx != 0) {
                 vx -= Math.signum(vx) * AxMax;
             }
+            // Set idle animation based on direction from movement
             if (isLanded && getAnimation() != idleRight && getAnimation() != idleLeft)
                 setAnimation(isLeft ? idleLeft : idleRight);
         }
 
+        // Handle jumping
         if (isLanded && kb.isKeyPressed("up")) {
             isLanded = false;
+            // Initial vertical velocity calculated based on desired max height (MaxJumpH)
             vy = (float) Math.sqrt(2 * Gravity * MaxJumpH);
+            // Set jump animation based on current direction
             if (getAnimation() != jumpRight && getAnimation() != jumpLeft)
                 setAnimation(isLeft ? jumpLeft : jumpRight);
         }
 
+        // Set fall animation based on current direction
         if (!isLanded && vy < 0 && getAnimation() != fallRight && getAnimation() != fallLeft)
             setAnimation(isLeft ? fallLeft : fallRight);
 
+        // Update dummy and next x position
         dummy.setPosition(getX() + vx, getY());
         xNxt = getX() + vx;
 
         for (Actor actor : getStage().getActors()) {
             if (actor instanceof Block) {
+                // If the Actor is jumping and will come in contact with the bottom of a block if it continues moving,
+                // stop it vertically and move it the remaining distance from the bottom
                 if (vy > 0 && getY() + vy - getHeight() / 2 >= actor.getY() + actor.getHeight() / 2 &&
                         yNxt - getHeight() / 2 <= actor.getY() + actor.getHeight() / 2 &&
                         getX() + getWidth() / 2 >= actor.getX() - actor.getWidth() / 2 &&
@@ -81,24 +99,32 @@ public class MovableAnimatedActor extends AnimatedActor {
                     vy = 0;
                 }
 
-                if (!isColliding[0] && vx > 0 && isTouching((int) vx, 0, actor)) {
-                    isColliding[0] = true;
+                // Check if Actor will collide to the left of a block by testing collision of dummy (set at the next x
+                // position). If so, set right collision flag to true (which will later stop movement) and move Actor
+                // the remaining distance from the left of the block. Also break loop so flag reset won't occur below
+                if (!isColliding[Right] && vx > 0 && isTouching((int) vx, 0, actor)) {
+                    isColliding[Right] = true;
                     move(actor.getX() - (actor.getWidth() / 2) - getX() - (getWidth() / 2), "East");
                     break;
                 }
-                if (isColliding[0]) {
-                    isColliding[0] = false;
+                // Reset right collision flag if there is no collision
+                if (isColliding[Right]) {
+                    isColliding[Right] = false;
                 }
 
-                if (!isColliding[1] && vx < 0 && isTouching((int) vx, 0, actor)) {
-                    isColliding[1] = true;
+                // Do the same thing as above, but for left collision by checking for dummy collision with the right
+                // side of a block
+                if (!isColliding[Left] && vx < 0 && isTouching((int) vx, 0, actor)) {
+                    isColliding[Left] = true;
                     move(getX() - (getWidth() / 2) - actor.getX() - (actor.getWidth() / 2), "West");
                     break;
                 }
-                if (isColliding[1]) {
-                    isColliding[1] = false;
+                if (isColliding[Left]) {
+                    isColliding[Left] = false;
                 }
             }
+
+            // Move Actor up and show running animation if in contact with a ladder and pressing up
             if (actor instanceof Ladder && isTouching(actor)) {
                 if (kb.isKeyPressed("up")) {
                     vy = 3;
@@ -108,11 +134,15 @@ public class MovableAnimatedActor extends AnimatedActor {
             }
         }
 
+        // Stop Actor from moving too far right of screen
         if (vx > 0 && xNxt + getWidth() / 2 > 800)
             vx = 0;
 
-        if (isColliding[0] || isColliding[1])
+        // If a collision was detected, stop horizontal movement
+        if (isColliding[Right] || isColliding[Left])
             vx = 0;
+
+        // Move horizontally if there is a horizontal velocity
         move(vx, "east");
     }
 

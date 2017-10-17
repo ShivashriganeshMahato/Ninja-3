@@ -1,6 +1,8 @@
 import mayflower.*;
 
 /**
+ * A harmful entity that is stationary in the world
+ *
  * @author Shivashriganesh Mahato
  */
 public class Obstacle extends Actor {
@@ -19,7 +21,8 @@ public class Obstacle extends Actor {
     
     public void update() {
         setPicture(sprite);
-        
+
+        // Check for collision with Ninja. If found, call onHit event to perform on hit action
         for (Actor actor : getTouching()) {
             if (actor instanceof Ninja) {
                 onHit((Ninja) actor);
@@ -27,7 +30,13 @@ public class Obstacle extends Actor {
         }
     }
 
+    /**
+     * Event fired when Ninja comes in contact with this Obstacle
+     *
+     * @param ninja The Ninja that has come into contact with this Obstacle
+     */
     protected void onHit(Ninja ninja) {
+        // Default on hit action is to deduct lives from Ninja
         ninja.lowerLives(damage);
     }
 }
